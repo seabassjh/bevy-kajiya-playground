@@ -1,0 +1,12 @@
+/target
+/bevy
+/bevy_kajiya_renderer
+/baked
+/assets/scenes/private-*
+/.vscode
+view_state*.ron
+nvngx*
+nvsdk*
+**/*.rs.bk
+*.blend1
+*.log
