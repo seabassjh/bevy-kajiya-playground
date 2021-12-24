@@ -1,13 +1,11 @@
 use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
 use dolly::prelude::{CameraRig, Position, YawPitch, Smooth};
-use bevy_kajiya::camera::{KajiyaCameraBundle, KajiyaCamera, EnvironmentSettings};
+use bevy_kajiya::{KajiyaCameraBundle, KajiyaCamera, EnvironmentSettings};
 use bevy_kajiya::{
     KajiyaRendererDefaultPlugins,
     KajiyaSceneDescriptor,
 };
-
-use bevy::{app::ScheduleRunnerSettings, utils::Duration};
 
 fn main() {
     App::new()
