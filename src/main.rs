@@ -15,7 +15,7 @@ fn main() {
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {
-            scene_file_name: "gas_stations".to_string(),
+            scene_name: "gas_stations".to_string(),
             ..Default::default()
         })
         .add_plugins(KajiyaRendererDefaultPlugins)
