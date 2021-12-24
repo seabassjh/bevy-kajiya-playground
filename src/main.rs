@@ -1,11 +1,8 @@
 use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
-use dolly::prelude::{CameraRig, Position, YawPitch, Smooth};
-use bevy_kajiya::{KajiyaCameraBundle, KajiyaCamera, EnvironmentSettings};
-use bevy_kajiya::{
-    KajiyaRendererDefaultPlugins,
-    KajiyaSceneDescriptor,
-};
+use bevy_kajiya::{EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle};
+use bevy_kajiya::{KajiyaRendererDefaultPlugins, KajiyaSceneDescriptor};
+use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
 
 fn main() {
     App::new()
@@ -70,11 +67,11 @@ fn rotator_system(time: Res<Time>, mut query: Query<&mut Transform, With<Rotator
 
 fn drive_camera(
     time: Res<Time>,
-    keys: Res<Input<KeyCode>>, 
+    keys: Res<Input<KeyCode>>,
     mut mouse_motion_events: EventReader<MouseMotion>,
     mouse_buttons: Res<Input<MouseButton>>,
-    mut camera_rig: ResMut<CameraRig>, 
-    mut query: Query<&mut Transform, With<KajiyaCamera>>
+    mut camera_rig: ResMut<CameraRig>,
+    mut query: Query<&mut Transform, With<KajiyaCamera>>,
 ) {
     let time_delta_seconds: f32 = time.delta_seconds();
 
@@ -115,9 +112,7 @@ fn drive_camera(
         }
     }
 
-    let move_vec = camera_rig.final_transform.rotation
-        * move_vec
-        * 10.0f32.powf(boost);
+    let move_vec = camera_rig.final_transform.rotation * move_vec * 10.0f32.powf(boost);
 
     camera_rig
         .driver_mut::<Position>()
@@ -132,5 +127,4 @@ fn drive_camera(
     let mut camera_transform = query.iter_mut().next().unwrap();
     camera_transform.translation = camera_rig.final_transform.position;
     camera_transform.rotation = camera_rig.final_transform.rotation;
-
 }
