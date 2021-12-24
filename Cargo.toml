@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy_kajiya_renderer = { path = "bevy_kajiya_renderer"  }
+bevy-kajiya = { path = "bevy-kajiya"  }
 bevy = { path = "bevy" }
 dolly = "0.1"
 

@@ -1,9 +1,9 @@
 @echo off
 
-cd bevy_kajiya_renderer\kajiya
+cd bevy-kajiya\kajiya
 
 cargo build --bin bake --release
-set BAKE=bevy_kajiya_renderer\kajiya\target\release\bake
+set BAKE=bevy-kajiya\kajiya\target\release\bake
 
 cd ..\..
 
