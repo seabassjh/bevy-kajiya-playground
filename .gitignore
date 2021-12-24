@@ -1,6 +1,6 @@
 /target
 /bevy
-/bevy-kajiya
+/bevy-kajiya_
 /baked
 /assets/scenes/private-*
 /.vscode

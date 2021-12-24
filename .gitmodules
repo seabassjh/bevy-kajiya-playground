@@ -1,0 +1,3 @@
+[submodule "bevy-kajiya"]
+	path = bevy-kajiya
+	url = https://github.com/Seabass247/bevy-kajiya.git
