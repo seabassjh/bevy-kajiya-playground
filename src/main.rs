@@ -50,7 +50,7 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
             mesh: KajiyaMesh::User("336_lrm".to_string()),
         },
         transform: Transform::default(),
-    });
+    }).insert(Rotator);
 }
 
 fn sun_move(time: Res<Time>, mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>) {
@@ -69,7 +69,7 @@ struct Rotator;
 /// rotates the parent, which will result in the child also rotating
 fn rotator_system(time: Res<Time>, mut query: Query<&mut Transform, With<Rotator>>) {
     for mut transform in query.iter_mut() {
-        transform.rotation *= Quat::from_rotation_x(3.0 * time.delta_seconds());
+        transform.rotation *= Quat::from_rotation_y(3.0 * time.delta_seconds());
     }
 }
 
