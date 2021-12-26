@@ -12,6 +12,7 @@ fn main() {
             height: 1080.,
             vsync: false,
             resizable: false,
+            scale_factor_override: Some(1.0),
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {
