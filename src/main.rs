@@ -1,6 +1,6 @@
 use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
-use bevy_kajiya::{EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle};
+use bevy_kajiya::{EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMeshInstance, KajiyaMeshInstanceBundle, KajiyaMesh};
 use bevy_kajiya::{KajiyaRendererDefaultPlugins, KajiyaSceneDescriptor};
 use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
 
@@ -44,6 +44,13 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
         .build();
 
     commands.insert_resource(camera_rig);
+
+    commands.spawn_bundle(KajiyaMeshInstanceBundle {
+        mesh_instance: KajiyaMeshInstance {
+            mesh: KajiyaMesh::User("336_lrm".to_string()),
+        },
+        transform: Transform::default(),
+    });
 }
 
 fn sun_move(time: Res<Time>, mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>) {
