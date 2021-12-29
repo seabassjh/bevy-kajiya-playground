@@ -26,7 +26,11 @@ fn main() {
         .add_system(rotator_system)
         .add_system(drive_camera)
         .run();
-}
+
+    }
+
+#[derive(Component, Copy, Clone)]
+struct BodyTag;
 
 fn setup_world(mut commands: Commands, windows: Res<Windows>) {
     
@@ -40,6 +44,14 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
             ..Default::default()
         },
         ..Default::default()
+    }).with_children(|parent| {
+        parent.spawn_bundle(KajiyaMeshInstanceBundle {
+            mesh_instance: KajiyaMeshInstance { 
+                mesh: KajiyaMesh::User("smiley_box".to_string()),
+            },
+            transform: Transform::from_translation(Vec3::new(0.0,0.0,0.4)),
+            ..Default::default()
+        }).insert(BodyTag);
     });
 
     // Not required, just a nice camera driver to give easy, smooth, camera controls.
@@ -57,6 +69,7 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
             mesh: KajiyaMesh::User("ring".to_string()),
         },
         transform: Transform::from_translation(Vec3::new(0.0, 1.0, 0.0)),
+        ..Default::default()
     }).insert(Rotator {
         ccw: true,
     });
@@ -70,16 +83,37 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
             mesh: KajiyaMesh::Scene(0, "336_lrm".to_string()),
         },
         transform: Transform::from_translation(Vec3::new(0.0, -0.001, 0.0)),
+        ..Default::default()
     }).insert(Rotator {
         ccw: false,
     });
+
+    commands.spawn_bundle(KajiyaMeshInstanceBundle {
+        mesh_instance: KajiyaMeshInstance { 
+            mesh: KajiyaMesh::User("mirror".to_string()),
+        },
+        transform: Transform::from_translation(Vec3::new(5.0, 0.0, 0.0)),
+        ..Default::default()
+    });
+
 }
 
-fn sun_move(time: Res<Time>, mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>) {
-    let scale = 0.0005;
-    for mut env in query.iter_mut() {
-        let theta = 180.0 * (time.time_since_startup().as_secs_f32() * scale).cos();
-        let phi = 180.0 * (time.time_since_startup().as_secs_f32() * scale).sin();
+fn sun_move(time: Res<Time>, mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>, mut mouse_motion_events: EventReader<MouseMotion>,
+    mouse_buttons: Res<Input<MouseButton>>,
+) {
+    let mut env = query.iter_mut().next().unwrap();
+    let mut mouse_delta = Vec2::ZERO;
+    let mouse_sensitivity = 0.005;
+    if mouse_buttons.pressed(MouseButton::Left) {
+        for event in mouse_motion_events.iter() {
+            mouse_delta += event.delta;
+        }
+        env.sun_theta_phi.0 += mouse_sensitivity * mouse_delta.x;
+        env.sun_theta_phi.1 += mouse_sensitivity * mouse_delta.y;
+    } else {
+        let time_scale = 0.0005;
+        let theta = 180.0 * (time.time_since_startup().as_secs_f32() * time_scale).sin();
+        let phi = 180.0 * (time.time_since_startup().as_secs_f32() * time_scale).sin();
         env.sun_theta_phi = (theta, phi);
     }
 }
