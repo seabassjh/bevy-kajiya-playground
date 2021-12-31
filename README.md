@@ -25,8 +25,8 @@ Navigating the scene:
 
 ### Configuration
 
-These `WindowDescriptor` setting are recommended for `kajiya` to run properly (except for width/height)
-as `kajiya` does not support resizable windows yet.
+These `WindowDescriptor` setting are recommended for `kajiya` to run properly as `kajiya` does not support resizable windows yet,
+but you can change the window width/height as necessary.
 ```
         .insert_resource(WindowDescriptor {
             title: "Bevy Kajiya Playground".to_string(),
