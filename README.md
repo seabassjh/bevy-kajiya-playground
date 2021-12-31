@@ -1,7 +1,9 @@
+<div align="center">
 
 # ☀️ bevy-kajiya playground
 
 **A example bevy application using bevy-kajiya for its renderer**
+</div>
 
 NOTE: only tested on Windows.
 
@@ -9,7 +11,7 @@ For more context, check out the [bevy-kajiya repo](https://github.com/Seabass247
 
 This bevy app demonstrates basic usage of the `bevy-kajiya` crate and the mesh and scene system used by `kajiya`.
 
-![alt text](https://https://github.com/Seabass247/bevy-kajiya-playground/blob/main/screenshot.png?raw=true)
+![alt text](https://github.com/Seabass247/bevy-kajiya-playground/blob/main/screenshot.png)
 
 ## Usage
 
