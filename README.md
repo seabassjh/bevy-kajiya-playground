@@ -20,6 +20,7 @@ Navigating the scene:
 - Left Click drag - move sun
 - Right Click drag - rotate camera
 
+1. `git submodule update --init --recursive`
 1. Run `bake.cmd` for  the first time building or if you've made changes to mesh assets
 2. Then do `cargo run`
 
