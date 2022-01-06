@@ -7,6 +7,11 @@ use bevy_kajiya::{
 use bevy_kajiya::{KajiyaRendererPlugins, KajiyaSceneDescriptor};
 use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
 
+#[derive(Default)]
+pub struct GuiSettings {
+    hide_gui: bool,
+}
+
 fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
@@ -22,6 +27,7 @@ fn main() {
             scene_name: "car".to_string(),
             ..Default::default()
         })
+        .init_resource::<GuiSettings>()
         .add_plugins(DefaultPlugins)
         .add_plugins(KajiyaRendererPlugins)
         .add_startup_system(setup_world)
@@ -29,11 +35,21 @@ fn main() {
         .add_system(rotator_system)
         .add_system(drive_camera)
         .add_system(ui_example)
+        .add_system(gui_settings)
         .run();
 }
 
-fn ui_example(egui_context: ResMut<kajiya_egui::EguiContext>) {
-    kajiya_egui::egui::Window::new("Hello")
+fn gui_settings(keys: Res<Input<KeyCode>>, mut settings: ResMut<GuiSettings>) {
+    if keys.just_pressed(KeyCode::Tab) {
+        settings.hide_gui = !settings.hide_gui;
+
+    }
+}
+
+fn ui_example(egui_context: ResMut<kajiya_egui::EguiContext>, settings: Res<GuiSettings>) {
+
+    if !settings.hide_gui {
+        kajiya_egui::egui::Window::new("Hello")
         .resizable(true)
         .show(&egui_context.egui, |ui| {
             ui.heading("Hello");
@@ -44,6 +60,7 @@ fn ui_example(egui_context: ResMut<kajiya_egui::EguiContext>) {
             ui.label("Rotation");
             ui.separator();
         });
+    }
 }
 
 #[derive(Component, Copy, Clone)]
