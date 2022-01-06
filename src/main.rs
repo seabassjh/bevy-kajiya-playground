@@ -1,6 +1,9 @@
 use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
-use bevy_kajiya::{EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMeshInstance, KajiyaMeshInstanceBundle, KajiyaMesh};
+use bevy_kajiya::{
+    kajiya_egui, EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMesh,
+    KajiyaMeshInstance, KajiyaMeshInstanceBundle,
+};
 use bevy_kajiya::{KajiyaRendererPlugins, KajiyaSceneDescriptor};
 use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
 
@@ -25,34 +28,51 @@ fn main() {
         .add_system(sun_move)
         .add_system(rotator_system)
         .add_system(drive_camera)
+        .add_system(ui_example)
         .run();
+}
 
-    }
+fn ui_example(egui_context: ResMut<kajiya_egui::EguiContext>) {
+    kajiya_egui::egui::Window::new("Hello")
+        .resizable(true)
+        .show(&egui_context.egui, |ui| {
+            ui.heading("Hello");
+            ui.label("Hello egui!");
+            ui.separator();
+            ui.hyperlink("https://github.com/emilk/egui");
+            ui.separator();
+            ui.label("Rotation");
+            ui.separator();
+        });
+}
 
 #[derive(Component, Copy, Clone)]
 struct BodyTag;
 
 fn setup_world(mut commands: Commands, windows: Res<Windows>) {
-    
     // Spawn an entity to control the kajiya renderer camera.  Only 1 camera is allowed at the moment.
     // The cameara bundle also provides the EnvironmentSettings components to give the user access to
     // the sun state.
     let window = windows.get_primary().unwrap();
-    commands.spawn_bundle(KajiyaCameraBundle {
-        camera: KajiyaCamera {
-            aspect_ratio: window.requested_width() / window.requested_height(),
-            ..Default::default()
-        },
-        ..Default::default()
-    }).with_children(|parent| {
-        parent.spawn_bundle(KajiyaMeshInstanceBundle {
-            mesh_instance: KajiyaMeshInstance { 
-                mesh: KajiyaMesh::User("smiley_box".to_string()),
+    commands
+        .spawn_bundle(KajiyaCameraBundle {
+            camera: KajiyaCamera {
+                aspect_ratio: window.requested_width() / window.requested_height(),
+                ..Default::default()
             },
-            transform: Transform::from_translation(Vec3::new(0.0,0.0,0.4)),
             ..Default::default()
-        }).insert(BodyTag);
-    });
+        })
+        .with_children(|parent| {
+            parent
+                .spawn_bundle(KajiyaMeshInstanceBundle {
+                    mesh_instance: KajiyaMeshInstance {
+                        mesh: KajiyaMesh::User("smiley_box".to_string()),
+                    },
+                    transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.4)),
+                    ..Default::default()
+                })
+                .insert(BodyTag);
+        });
 
     // Not required, just a nice camera driver to give easy, smooth, camera controls.
     let camera_rig = CameraRig::builder()
@@ -64,41 +84,43 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
     commands.insert_resource(camera_rig);
 
     // Spawn a new "user" mesh instance with the "ring" mesh
-    commands.spawn_bundle(KajiyaMeshInstanceBundle {
-        mesh_instance: KajiyaMeshInstance { 
-            mesh: KajiyaMesh::User("ring".to_string()),
-        },
-        transform: Transform::from_translation(Vec3::new(0.0, 1.0, 0.0)),
-        ..Default::default()
-    }).insert(Rotator {
-        ccw: true,
-    });
+    commands
+        .spawn_bundle(KajiyaMeshInstanceBundle {
+            mesh_instance: KajiyaMeshInstance {
+                mesh: KajiyaMesh::User("ring".to_string()),
+            },
+            transform: Transform::from_translation(Vec3::new(0.0, 1.0, 0.0)),
+            ..Default::default()
+        })
+        .insert(Rotator { ccw: true });
 
     // Spawn a mesh instance entity that "attaches" to the instance created by the scene loader.
     // Allows you to interact with the scene's meshes.  Scene meshes are referred to by their scene
-    // index and the mesh file name.  0 is the first mesh instance described in the .ron scene file, 
+    // index and the mesh file name.  0 is the first mesh instance described in the .ron scene file,
     // 1 the second mesh instance... etc.
-    commands.spawn_bundle(KajiyaMeshInstanceBundle {
-        mesh_instance: KajiyaMeshInstance { 
-            mesh: KajiyaMesh::Scene(0, "336_lrm".to_string()),
-        },
-        transform: Transform::from_translation(Vec3::new(0.0, -0.001, 0.0)),
-        ..Default::default()
-    }).insert(Rotator {
-        ccw: false,
-    });
+    commands
+        .spawn_bundle(KajiyaMeshInstanceBundle {
+            mesh_instance: KajiyaMeshInstance {
+                mesh: KajiyaMesh::Scene(0, "336_lrm".to_string()),
+            },
+            transform: Transform::from_translation(Vec3::new(0.0, -0.001, 0.0)),
+            ..Default::default()
+        })
+        .insert(Rotator { ccw: false });
 
     commands.spawn_bundle(KajiyaMeshInstanceBundle {
-        mesh_instance: KajiyaMeshInstance { 
+        mesh_instance: KajiyaMeshInstance {
             mesh: KajiyaMesh::User("mirror".to_string()),
         },
         transform: Transform::from_translation(Vec3::new(5.0, 0.0, 0.0)),
         ..Default::default()
     });
-
 }
 
-fn sun_move(time: Res<Time>, mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>, mut mouse_motion_events: EventReader<MouseMotion>,
+fn sun_move(
+    time: Res<Time>,
+    mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>,
+    mut mouse_motion_events: EventReader<MouseMotion>,
     mouse_buttons: Res<Input<MouseButton>>,
 ) {
     let mut env = query.iter_mut().next().unwrap();
@@ -127,11 +149,7 @@ struct Rotator {
 /// rotates the parent, which will result in the child also rotating
 fn rotator_system(time: Res<Time>, mut query: Query<(&mut Transform, &Rotator)>) {
     for (mut transform, rotator) in query.iter_mut() {
-        let ang_vel = if rotator.ccw {
-            1.0
-        } else {
-            -1.0
-        };
+        let ang_vel = if rotator.ccw { 1.0 } else { -1.0 };
 
         transform.rotation *= Quat::from_rotation_y(ang_vel * time.delta_seconds());
     }
