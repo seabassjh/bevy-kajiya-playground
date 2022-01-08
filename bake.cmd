@@ -1,11 +1,11 @@
 @echo off
 
-cd bevy-kajiya\kajiya
+cd .\kajiya
 
 cargo build --bin bake --release
-set BAKE=bevy-kajiya\kajiya\target\release\bake
+set BAKE=.\kajiya\target\release\bake
 
-cd ..\..
+cd ..
 
 %BAKE% --scene "assets/meshes/336_lrm/scene.gltf" --scale 1.0 -o car
 %BAKE% --scene "assets/meshes/floor/scene.gltf" --scale 1.0 -o floor

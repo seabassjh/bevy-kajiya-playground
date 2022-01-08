@@ -1,10 +1,13 @@
 use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
-use bevy_kajiya::{
-    kajiya_egui, EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMesh,
-    KajiyaMeshInstance, KajiyaMeshInstanceBundle,
+
+use bevy_kajiya::kajiya_render::{
+    EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMesh,
+    KajiyaMeshInstance, KajiyaMeshInstanceBundle, KajiyaSceneDescriptor
 };
-use bevy_kajiya::{KajiyaRendererPlugins, KajiyaSceneDescriptor};
+use bevy_kajiya::kajiya_egui;
+use bevy_kajiya::BevyKajiyaPlugins;
+
 use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
 
 #[derive(Default)]
@@ -29,7 +32,7 @@ fn main() {
         })
         .init_resource::<GuiSettings>()
         .add_plugins(DefaultPlugins)
-        .add_plugins(KajiyaRendererPlugins)
+        .add_plugins(BevyKajiyaPlugins)
         .add_startup_system(setup_world)
         .add_system(sun_move)
         .add_system(rotator_system)

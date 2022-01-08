@@ -153,16 +153,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ash-imgui"
-version = "0.1.0"
-dependencies = [
- "arrayvec",
- "ash",
- "imgui",
- "memoffset",
-]
-
-[[package]]
 name = "ash-window"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -349,20 +339,9 @@ dependencies = [
 name = "bevy-kajiya"
 version = "0.1.0"
 dependencies = [
- "anyhow",
- "bevy",
- "glam 0.18.0",
- "imgui",
- "kajiya",
- "kajiya-egui",
- "kajiya-imgui",
- "log",
- "puffin",
- "ron 0.6.6",
- "serde",
- "structopt",
- "turbosloth",
- "winit 0.25.0",
+ "bevy_kajiya_core",
+ "bevy_kajiya_egui",
+ "bevy_kajiya_render",
 ]
 
 [[package]]
@@ -503,6 +482,43 @@ dependencies = [
  "bevy_window",
  "bevy_winit",
  "ndk-glue 0.5.0",
+]
+
+[[package]]
+name = "bevy_kajiya_core"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_kajiya_egui",
+ "bevy_kajiya_render",
+]
+
+[[package]]
+name = "bevy_kajiya_egui"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_kajiya_render",
+ "kajiya",
+ "kajiya-egui",
+]
+
+[[package]]
+name = "bevy_kajiya_render"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bevy",
+ "glam 0.18.0",
+ "imgui",
+ "kajiya",
+ "log",
+ "puffin",
+ "ron 0.6.6",
+ "serde",
+ "structopt",
+ "turbosloth",
+ "winit 0.25.0",
 ]
 
 [[package]]
@@ -1217,9 +1233,9 @@ checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
 
 [[package]]
 name = "easy-parallel"
-version = "3.1.0"
+version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1dd4afd79212583ff429b913ad6605242ed7eec277e950b1438f300748f948f4"
+checksum = "6907e25393cdcc1f4f3f513d9aac1e840eb1cc341a0fccb01171f7d14d10b946"
 
 [[package]]
 name = "egui"
@@ -1693,16 +1709,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "imgui-winit-support"
-version = "0.7.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22ae881a42852470216c77fba5835b9701815adac24dfaa8d4ebf3a368376756"
-dependencies = [
- "imgui",
- "winit 0.25.0",
-]
-
-[[package]]
 name = "indexmap"
 version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1866,19 +1872,6 @@ name = "kajiya-egui"
 version = "0.1.0"
 dependencies = [
  "ash-egui",
- "kajiya",
- "log",
- "parking_lot",
- "winit 0.25.0",
-]
-
-[[package]]
-name = "kajiya-imgui"
-version = "0.1.0"
-dependencies = [
- "ash-imgui",
- "imgui",
- "imgui-winit-support",
  "kajiya",
  "log",
  "parking_lot",
@@ -2289,9 +2282,9 @@ dependencies = [
 
 [[package]]
 name = "normpath"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "640c20e9df4a2d4a5adad5b47e17d76dac3e824346b181931c3ec9f7a85687b1"
+checksum = "04aaf5e9cb0fbf883cc0423159eacdf96a9878022084b35c462c428cab73bcaf"
 dependencies = [
  "winapi 0.3.9",
 ]
@@ -2855,9 +2848,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.73"
+version = "1.0.74"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bcbd0344bc6533bc7ec56df11d42fb70f1b912351c0825ccb7211b59d8af7cf5"
+checksum = "ee2bb9cd061c5865d345bb02ca49fcef1391741b672b54a0bf7b679badec3142"
 dependencies = [
  "itoa",
  "ryu",
