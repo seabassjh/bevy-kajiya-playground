@@ -34,7 +34,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugins(BevyKajiyaPlugins)
         .add_startup_system(setup_world)
-        .add_system(sun_move)
+        // .add_system(sun_move)
         .add_system(rotator_system)
         .add_system(drive_camera)
         .add_system(ui_example)
