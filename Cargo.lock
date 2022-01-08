@@ -340,6 +340,7 @@ name = "bevy-kajiya"
 version = "0.1.0"
 dependencies = [
  "bevy_kajiya_core",
+ "bevy_kajiya_editor",
  "bevy_kajiya_egui",
  "bevy_kajiya_render",
 ]
