@@ -37,7 +37,7 @@ fn main() {
         // .add_system(sun_move)
         .add_system(rotator_system)
         .add_system(drive_camera)
-        .add_system(ui_example)
+        // .add_system(ui_example)
         .add_system(gui_settings)
         .run();
 }
