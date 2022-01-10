@@ -19,6 +19,8 @@ fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
             title: "Bevy Kajiya Playground".to_string(),
+            width: 1920.,
+            height: 1080.,
             vsync: false,
             resizable: false,
             mode: bevy::window::WindowMode::BorderlessFullscreen,
@@ -47,7 +49,7 @@ fn gui_settings(keys: Res<Input<KeyCode>>, mut settings: ResMut<GuiSettings>) {
     }
 }
 
-fn ui_example(egui_context: ResMut<kajiya_egui::EguiContext>, settings: Res<GuiSettings>) {
+fn _ui_example(egui_context: ResMut<kajiya_egui::EguiContext>, settings: Res<GuiSettings>) {
 
     if !settings.hide_gui {
         kajiya_egui::egui::Window::new("Hello")
@@ -143,7 +145,7 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
     }).insert(TargetTag);
 }
 
-fn sun_move(
+fn _sun_move(
     time: Res<Time>,
     mut query: Query<&mut EnvironmentSettings, With<KajiyaCamera>>,
     mut mouse_motion_events: EventReader<MouseMotion>,
