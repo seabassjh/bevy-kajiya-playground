@@ -5,7 +5,7 @@ use bevy_kajiya::kajiya_render::{
     EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMesh,
     KajiyaMeshInstance, KajiyaMeshInstanceBundle, KajiyaSceneDescriptor
 };
-use bevy_kajiya::{kajiya_egui, TargetTag};
+use bevy_kajiya::{kajiya_egui, TargetTag, SelectableTag};
 use bevy_kajiya::BevyKajiyaPlugins;
 
 use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
@@ -142,7 +142,7 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
         },
         transform: Transform::from_translation(Vec3::new(-5.0, 0.0, 0.0)),
         ..Default::default()
-    }).insert(TargetTag);
+    }).insert(TargetTag).insert(SelectableTag);
 }
 
 fn _sun_move(
