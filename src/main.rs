@@ -19,11 +19,9 @@ fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
             title: "Bevy Kajiya Playground".to_string(),
-            width: 1920.,
-            height: 1080.,
             vsync: false,
             resizable: false,
-            scale_factor_override: Some(1.0),
+            mode: bevy::window::WindowMode::BorderlessFullscreen,
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {

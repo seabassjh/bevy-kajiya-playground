@@ -501,6 +501,7 @@ version = "0.1.0"
 dependencies = [
  "bevy",
  "bevy_kajiya_egui",
+ "bevy_kajiya_logger",
  "bevy_kajiya_render",
  "egui-gizmo",
  "kajiya",
@@ -511,9 +512,17 @@ name = "bevy_kajiya_egui"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "bevy_kajiya_logger",
  "bevy_kajiya_render",
  "kajiya",
  "kajiya-egui",
+]
+
+[[package]]
+name = "bevy_kajiya_logger"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
 ]
 
 [[package]]
