@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 bevy-kajiya = { path = "bevy-kajiya" }
-bevy = { path = "bevy", default-features = false, features = ["bevy_winit"] }
+bevy = { version = "0.6.0", default-features = false, features = ["bevy_winit"] }
 dolly = "0.1"
 
 [patch.crates-io]
