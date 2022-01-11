@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy-kajiya = { path = "bevy-kajiya" }
-bevy = { path = "bevy", default-features = false, features = ["bevy_winit"] }
+bevy-kajiya = { path = "bevy-kajiya", features = ["kajiya_egui"]  }
+bevy = { version = "0.6.0", default-features = false, features = ["bevy_winit"] }
 dolly = "0.1"
 
 [patch.crates-io]

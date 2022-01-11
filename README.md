@@ -30,12 +30,10 @@ These `WindowDescriptor` setting are recommended for `kajiya` to run properly as
 but you can change the window width/height as necessary.
 ```
         .insert_resource(WindowDescriptor {
-            title: "Bevy Kajiya Playground".to_string(),
             width: 1920.,
             height: 1080.,
             vsync: false,
             resizable: false,
-            scale_factor_override: Some(1.0),
             ..Default::default()
         })
 ```
