@@ -1,3 +1,6 @@
 [submodule "bevy-kajiya"]
 	path = bevy-kajiya
 	url = https://github.com/Seabass247/bevy-kajiya.git
+[submodule "bevy"]
+	path = bevy
+	url = https://github.com/bevyengine/bevy
