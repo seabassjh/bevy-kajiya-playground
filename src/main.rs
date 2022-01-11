@@ -1,7 +1,6 @@
-use bevy::input::mouse::MouseMotion;
+use bevy::{input::mouse::MouseMotion, window::WindowMode};
 use bevy::prelude::*;
-use bevy_kajiya::{EnvironmentSettings, KajiyaCamera, KajiyaCameraBundle, KajiyaMeshInstance, KajiyaMeshInstanceBundle, KajiyaMesh};
-use bevy_kajiya::{KajiyaRendererPlugins, KajiyaSceneDescriptor};
+use bevy_kajiya::{kajiya_render::{KajiyaSceneDescriptor, KajiyaCameraBundle, KajiyaCamera, KajiyaMeshInstanceBundle, KajiyaMeshInstance, KajiyaMesh, EnvironmentSettings}, BevyKajiyaPlugins};
 use dolly::prelude::{CameraRig, Position, Smooth, YawPitch};
 
 fn main() {
@@ -12,7 +11,7 @@ fn main() {
             height: 1080.,
             vsync: false,
             resizable: false,
-            scale_factor_override: Some(1.0),
+            mode: WindowMode::BorderlessFullscreen,
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {
@@ -20,7 +19,7 @@ fn main() {
             ..Default::default()
         })
         .add_plugins(DefaultPlugins)
-        .add_plugins(KajiyaRendererPlugins)
+        .add_plugins(BevyKajiyaPlugins)
         .add_startup_system(setup_world)
         .add_system(sun_move)
         .add_system(rotator_system)

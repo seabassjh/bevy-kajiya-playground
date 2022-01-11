@@ -4,3 +4,6 @@
 [submodule "bevy"]
 	path = bevy
 	url = https://github.com/bevyengine/bevy
+[submodule "kajiya"]
+	path = kajiya
+	url = https://github.com/EmbarkStudios/kajiya.git
