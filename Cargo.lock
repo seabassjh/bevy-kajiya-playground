@@ -333,7 +333,7 @@ dependencies = [
 
 [[package]]
 name = "bevy-kajiya"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "bevy_kajiya_core",
  "bevy_kajiya_render",
@@ -341,7 +341,7 @@ dependencies = [
 
 [[package]]
 name = "bevy-kayjiya-playground"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "bevy",
  "bevy-kajiya",
