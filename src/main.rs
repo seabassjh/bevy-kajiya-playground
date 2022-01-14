@@ -11,7 +11,7 @@ fn main() {
             height: 1080.,
             vsync: false,
             resizable: false,
-            mode: WindowMode::BorderlessFullscreen,
+            mode: WindowMode::Windowed,
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {
@@ -21,7 +21,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugins(BevyKajiyaPlugins)
         .add_startup_system(setup_world)
-        .add_system(sun_move)
+        // .add_system(sun_move)
         .add_system(rotator_system)
         .add_system(drive_camera)
         .run();
@@ -46,7 +46,8 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
     }).with_children(|parent| {
         parent.spawn_bundle(KajiyaMeshInstanceBundle {
             mesh_instance: KajiyaMeshInstance { 
-                mesh: KajiyaMesh::User("smiley_box".to_string()),
+                mesh: KajiyaMesh::Name("smiley_box".to_string()),
+                scale: 0.1,
             },
             transform: Transform::from_translation(Vec3::new(0.0,0.0,0.4)),
             ..Default::default()
@@ -62,34 +63,35 @@ fn setup_world(mut commands: Commands, windows: Res<Windows>) {
 
     commands.insert_resource(camera_rig);
 
-    // Spawn a new "user" mesh instance with the "ring" mesh
-    commands.spawn_bundle(KajiyaMeshInstanceBundle {
-        mesh_instance: KajiyaMeshInstance { 
-            mesh: KajiyaMesh::User("ring".to_string()),
-        },
-        transform: Transform::from_translation(Vec3::new(0.0, 1.0, 0.0)),
-        ..Default::default()
-    }).insert(Rotator {
-        ccw: true,
-    });
+    // // Spawn a new "user" mesh instance with the "ring" mesh
+    // commands.spawn_bundle(KajiyaMeshInstanceBundle {
+    //     mesh_instance: KajiyaMeshInstance { 
+    //         mesh: KajiyaMesh::User("ring".to_string()),
+    //     },
+    //     transform: Transform::from_translation(Vec3::new(0.0, 1.0, 0.0)),
+    //     ..Default::default()
+    // }).insert(Rotator {
+    //     ccw: true,
+    // });
 
-    // Spawn a mesh instance entity that "attaches" to the instance created by the scene loader.
-    // Allows you to interact with the scene's meshes.  Scene meshes are referred to by their scene
-    // index and the mesh file name.  0 is the first mesh instance described in the .ron scene file, 
-    // 1 the second mesh instance... etc.
-    commands.spawn_bundle(KajiyaMeshInstanceBundle {
-        mesh_instance: KajiyaMeshInstance { 
-            mesh: KajiyaMesh::Scene(0, "336_lrm".to_string()),
-        },
-        transform: Transform::from_translation(Vec3::new(0.0, -0.001, 0.0)),
-        ..Default::default()
-    }).insert(Rotator {
-        ccw: false,
-    });
+    // // Spawn a mesh instance entity that "attaches" to the instance created by the scene loader.
+    // // Allows you to interact with the scene's meshes.  Scene meshes are referred to by their scene
+    // // index and the mesh file name.  0 is the first mesh instance described in the .ron scene file, 
+    // // 1 the second mesh instance... etc.
+    // commands.spawn_bundle(KajiyaMeshInstanceBundle {
+    //     mesh_instance: KajiyaMeshInstance { 
+    //         mesh: KajiyaMesh::Scene(0, "336_lrm".to_string()),
+    //     },
+    //     transform: Transform::from_translation(Vec3::new(0.0, -0.001, 0.0)),
+    //     ..Default::default()
+    // }).insert(Rotator {
+    //     ccw: false,
+    // });
 
     commands.spawn_bundle(KajiyaMeshInstanceBundle {
         mesh_instance: KajiyaMeshInstance { 
-            mesh: KajiyaMesh::User("mirror".to_string()),
+            mesh: KajiyaMesh::Name("mirror".to_string()),
+            ..Default::default()
         },
         transform: Transform::from_translation(Vec3::new(5.0, 0.0, 0.0)),
         ..Default::default()
