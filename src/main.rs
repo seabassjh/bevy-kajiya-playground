@@ -23,7 +23,7 @@ fn main() {
             height: 1080.,
             vsync: false,
             resizable: false,
-            mode: WindowMode::BorderlessFullscreen,
+            mode: WindowMode::Windowed,
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {
@@ -53,12 +53,12 @@ fn gui_settings(keys: Res<Input<KeyCode>>, mut settings: ResMut<GuiSettings>) {
     }
 }
 
-fn ui_example(egui_context: ResMut<kajiya_egui::EguiContext>, settings: Res<GuiSettings>) {
+fn ui_example(egui: ResMut<kajiya_egui::Egui>, settings: Res<GuiSettings>) {
 
     if !settings.hide_gui {
         kajiya_egui::egui::Window::new("Hello")
         .resizable(true)
-        .show(&egui_context.egui, |ui| {
+        .show(egui.ctx(), |ui| {
             ui.heading("Hello");
             ui.label("Hello egui!");
             ui.separator();
