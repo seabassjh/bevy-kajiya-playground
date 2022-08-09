@@ -13,8 +13,8 @@ fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
             title: "Bevy Kajiya Playground".to_string(),
-            width: 1920.,
-            height: 1080.,
+            width: 1024.,
+            height: 768.,
             resizable: false,
             mode: WindowMode::BorderlessFullscreen,
             ..Default::default()
@@ -151,7 +151,7 @@ fn drive_camera(
 ) {
     let time_delta_seconds: f32 = time.delta_seconds();
 
-    let mut move_vec = Vec3::ZERO;
+    let mut move_vec = dolly::glam::Vec3::ZERO;
     let mut boost = 0.0;
 
     if keys.pressed(KeyCode::LShift) {
@@ -201,6 +201,10 @@ fn drive_camera(
     camera_rig.update(time_delta_seconds);
 
     let mut camera_transform = query.iter_mut().next().unwrap();
-    camera_transform.translation = camera_rig.final_transform.position;
-    camera_transform.rotation = camera_rig.final_transform.rotation;
+
+    let position_decomp: (f32, f32, f32) = camera_rig.final_transform.position.into();
+    let rotation_decomp: [f32; 4] = camera_rig.final_transform.rotation.into();
+
+    camera_transform.translation = Vec3::from(position_decomp);
+    camera_transform.rotation = Quat::from_array(rotation_decomp);
 }
