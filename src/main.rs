@@ -16,7 +16,7 @@ fn main() {
             width: 1024.,
             height: 768.,
             resizable: false,
-            mode: WindowMode::BorderlessFullscreen,
+            mode: WindowMode::Windowed,
             ..Default::default()
         })
         .insert_resource(KajiyaSceneDescriptor {
